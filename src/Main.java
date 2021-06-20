@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         rnd = new Random(42);
 
+        /*
         Folder fo1 = new Folder("B");
         File fi1 = new File("bye", "log");
         fo1.addItem(fi1);
@@ -59,5 +60,7 @@ public class Main {
         temp1.addItem(new File("test1", "cs"));
 
         f.printTree(SortingField.NAME);
+
+         */
     }
 }
