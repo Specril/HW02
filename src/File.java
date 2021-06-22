@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 import java.util.Date;
 public class File extends StorageItem {
     private String type;
@@ -20,8 +21,12 @@ public class File extends StorageItem {
         this.content+=contentToAdd;
     }
     public void printContent(){
-        Date creationDate = new Date(super.timeStamp);
-        System.out.println(getName()+"Size: "+getSize()+"MB Created"+creationDate.toString()+"\n"+this.content);
-
+        Timestamp timestamp= Timestamp.valueOf("2017-01-01 00:00:00");
+        timestamp.setTime(super.timeStamp);
+        System.out.println(getName()+" Size: "+getSize()+"MB Created: "+timestamp.toString()+"\n"+this.content);
+    }
+    @Override
+    public void printTree(SortingField field) {
+        System.out.println(getName());
     }
 }

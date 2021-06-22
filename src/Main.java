@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         rnd = new Random(42);
 
-        /*
+
         Folder fo1 = new Folder("B");
         File fi1 = new File("bye", "log");
         fo1.addItem(fi1);
@@ -61,24 +61,7 @@ public class Main {
 
         f.printTree(SortingField.NAME);
 
-         */
-        Folder F1 = new Folder("PC");
-        System.out.println(F1.getName());
-        Folder F2 = new Folder("C");
-        System.out.println(F2.getName());
-        Folder F3 = new Folder("User");
-        System.out.println(F3.getName());
-        File F4 = new File("java","txt");
-        F3.addItem(F4);
-        F2.addItem(F3);
-        F1.addItem(F2);
-        System.out.println(F3.getContent().get(0).getName());
-        File wanted = F1.findFile("C/User/java.txt");
-        if(wanted==null){
-            System.out.println("Did not find...");
-        }
-        else{
-            System.out.println("Found file: "+wanted.getName());
-        }
+
+
     }
 }
