@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class Folder extends StorageItem {
     private ArrayList<StorageItem> content;
+    public static int indent=0;
 
     public Folder(String name) {
         super(name);
@@ -38,7 +40,7 @@ public class Folder extends StorageItem {
 
     public boolean existItem(String item) {
         for (StorageItem sm : this.content) {
-            if (item.equals(sm.getName())){
+            if (item.equals(sm.getName())) {
                 return true;
             }
         }
@@ -66,47 +68,58 @@ public class Folder extends StorageItem {
         }
         return null;
     }
+
     class SortByName implements Comparator<StorageItem> {
         @Override
-        public int compare(StorageItem a, StorageItem b)
-        {
+        public int compare(StorageItem a, StorageItem b) {
             return a.getName().compareTo(b.getName());
         }
     }
+
     class SortBySize implements Comparator<StorageItem> {
         @Override
-        public int compare(StorageItem a, StorageItem b)
-        {
+        public int compare(StorageItem a, StorageItem b) {
             return a.getSize() - b.getSize();
         }
     }
+
     class SortByDate implements Comparator<StorageItem> {
         @Override
-        public int compare(StorageItem a, StorageItem b)
-        {
-            return (int)(a.timeStamp - b.timeStamp);
+        public int compare(StorageItem a, StorageItem b) {
+            Date aDate = new Date(a.timeStamp);
+            Date bDate = new Date(b.timeStamp);
+            return aDate.compareTo(bDate);
         }
     }
 
 
     @Override
     public void printTree(SortingField field) {
-        switch (field){
+        switch (field) {
             case NAME:
-                Collections.sort(this.content,new SortByDate());
+                Collections.sort(this.content, new SortByName());
                 break;
             case SIZE:
-                Collections.sort(this.content,new SortBySize().thenComparing(new SortByName()));
+                Collections.sort(this.content, new SortBySize().thenComparing(new SortByName()));
                 break;
             case DATE:
-                Collections.sort(this.content,new SortByDate().thenComparing(new SortByName()));
+                Collections.sort(this.content, new SortByDate().thenComparing(new SortByName()));
+                //System.out.println(this.content);
                 break;
             default:
         }
+        indent++;
         System.out.println(super.name);
-        for (StorageItem sm:this.content) {
+        for (int i = 0; i < this.content.size(); i++) {
+            printIndentations(indent);
+            this.content.get(i).printTree(field);
+        }
+        indent--;
+    }
+
+    public void printIndentations(int indent) {
+        for (int i = 0; i < indent; i++) {
             System.out.print("|    ");
-            sm.printTree(field);
         }
     }
 }
