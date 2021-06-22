@@ -27,16 +27,41 @@ public class Folder extends StorageItem {
     }
 
     public boolean addItem(StorageItem item) {
-        for (StorageItem sm : this.content) {
-            if (item.getName() == sm.getName()) {
-                return false;
-            }
+        if (existItem(item.getName())) {
+            return false;
         }
         this.content.add(item);
         return true;
     }
 
+    public boolean existItem(String item) {
+        for (StorageItem sm : this.content) {
+            if (item.equals(sm.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public File findFile(String path) {
+        if (!path.contains("/") && existItem(path)) {
+            return (File) returnStorageItem(this.content, path);
+        }
+        String[] pathList = path.split("/"); //
+        if (existItem(pathList[0])) {
+            int firstSubFolderIndex = path.indexOf("/");
+            String newPath = path.substring(firstSubFolderIndex + 1);
+            return (File) ((Folder) returnStorageItem(this.content, pathList[0])).findFile(newPath);
+        }
+        return null;
+    }
+
+    public StorageItem returnStorageItem(ArrayList<StorageItem> currentFolder, String item) {
+        for (int i = 0; i < currentFolder.size(); i++) {
+            if (currentFolder.get(i).getName().equals(item)) {
+                return currentFolder.get(i);
+            }
+        }
         return null;
     }
 

@@ -11,7 +11,7 @@ abstract class StorageItem {
         long minMillis = minDate.getTime();
         Date maxDate = new Date(2021,12,31,23,59,59);
         long maxMillis = maxDate.getTime();
-        this.timeStamp = Math.abs(Main.rnd.nextLong())%(maxMillis-minMillis)+minMillis;
+        this.timeStamp = Math.abs(Main.rnd.nextLong())%((maxMillis-minMillis)+minMillis);
     }
     abstract String getName();
 
