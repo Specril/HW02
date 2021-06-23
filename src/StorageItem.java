@@ -1,27 +1,21 @@
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
 
 abstract class StorageItem {
     protected String name;
     protected long timeStamp;
+
+    /**
+     * Builder function for StorageItem.
+     * @param name A string name used for building a new storage item.
+     */
     StorageItem(String name) {
         this.name = name;
-        /*Date minDate = new Date(2017,1,1,0,0,0);
-        long minMillis = minDate.getTime();
-        Date maxDate = new Date(2021,12,31,23,59,59);
-        long maxMillis = maxDate.getTime();
-        this.timeStamp = Math.abs(Main.rnd.nextLong())%((maxMillis-minMillis)+minMillis);*/
-        Timestamp minDate = Timestamp.valueOf("2017-01-01 00:00:00");
-        Timestamp maxDate = Timestamp.valueOf("2021-12-31 23:59:59");
-        long LOW_MILLIS = minDate.getTime();
-        long HIGH_MILLIS = maxDate.getTime();
-        long RANDOM_TIME = Math.abs(Main.rnd.nextLong());
-        long time = ((RANDOM_TIME)%(HIGH_MILLIS-LOW_MILLIS)+LOW_MILLIS);
-        this.timeStamp = time;
+        Timestamp minDate = Timestamp.valueOf("2017-01-01 00:00:00"); // Using a timestamp to determine our lowest value.
+        Timestamp maxDate = Timestamp.valueOf("2021-12-31 23:59:59"); // Using a timestamp to determine our highest value.
+        long LOW_MILLIS = minDate.getTime(); // Translating the timestamp into milliseconds and saving it as a long value.
+        long HIGH_MILLIS = maxDate.getTime(); // Translating the timestamp into milliseconds and saving it as a long value.
+        long RANDOM_TIME = Math.abs(Main.rnd.nextLong()); // Use the random number generator from Main to generate a pseudo-random long value.
+        this.timeStamp = ((RANDOM_TIME)%(HIGH_MILLIS-LOW_MILLIS)+LOW_MILLIS); // Set the random timestamp to be between our high and low bounds.
     }
     abstract String getName();
 
